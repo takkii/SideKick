@@ -40,7 +40,6 @@ namespace SideKick
                     Console.WriteLine();
                 }
             }
-            Console.ReadKey();
         }
     }
 }
