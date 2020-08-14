@@ -1,30 +1,46 @@
 ﻿using System;
-using System.IO;
-using System.Net;
 using System.Text;
+using System.Net;
+using Microsoft.VisualBasic.FileIO;
 
 namespace SideKick
 {
     class Program
     {
-        public static void Main()
+        static void Main(string[] args)
         {
             WebClient wctd = new WebClient();
             wctd.DownloadFile(
               "https://www.data.jma.go.jp/obd/stats/data/mdrr/pre_rct/alltable/pre1h00_rct.csv",
               "pre01.csv");
 
-            string filePath = @"pre01.csv";
-            StreamReader reader = new StreamReader(filePath, Encoding.GetEncoding("shift_jis"));
-
-            while (reader.Peek() >= 0)
+            var parser = new TextFieldParser(@"pre01.csv",
+            Encoding.GetEncoding("Shift_JIS"));
+            using (parser)
             {
-                string[] cols = reader.ReadLine().Split(',');
-                for (int n = 0; n < cols.Length; n++)
-                    Console.Write(cols[n] + "\t");
-                Console.WriteLine();
+                // カンマ区切りの指定
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(",");
+
+                // フィールドが引用符で囲まれているか
+                parser.HasFieldsEnclosedInQuotes = true;
+                // フィールドの空白トリム設定
+                parser.TrimWhiteSpace = false;
+
+                // ファイルの終端までループ
+                while (!parser.EndOfData)
+                {
+                    // フィールドを読込
+                    string[] row = parser.ReadFields();
+                    foreach (string field in row)
+                    {
+                        // タブ区切りで出力
+                        Console.Write(field + "\t");
+                    }
+                    Console.WriteLine();
+                }
             }
-            reader.Close();
+            Console.ReadKey();
         }
     }
 }
