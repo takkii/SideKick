@@ -19,33 +19,28 @@ namespace SideKick
             Encoding.GetEncoding("Shift_JIS"));
             using (parser)
             {
-                // カンマ区切りの指定
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(",");
 
-                // フィールドが引用符で囲まれているか
                 parser.HasFieldsEnclosedInQuotes = true;
-                // フィールドの空白トリム設定
                 parser.TrimWhiteSpace = false;
 
-                // ファイルの終端までループ
                 while (!parser.EndOfData)
                 {
                     StreamWriter sw = new StreamWriter(
-                    "tenki.txt", // 出力先ファイル名
-                    true, // 追加書き込み
+                    "tenki.txt", 
+                    true,
                     Encoding.UTF8);
 
                     Console.SetOut(sw);
-                    // フィールドを読込
+
                     string[] row = parser.ReadFields();
                     foreach (string field in row)
                     {
-                        // タブ区切りで出力
+
                         Console.Write(field + "\t");                  
                     }
                     Console.WriteLine();
-                    // ファイルを閉じてオブジェクトを破棄 
                     sw.Dispose(); 
                 }
             }
