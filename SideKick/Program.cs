@@ -37,7 +37,6 @@ namespace SideKick
                     string[] row = parser.ReadFields();
                     foreach (string field in row)
                     {
-
                         Console.Write(field + "\t");                  
                     }
                     Console.WriteLine();
