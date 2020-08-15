@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Net;
+using System.IO;
 using Microsoft.VisualBasic.FileIO;
 
 namespace SideKick
@@ -30,14 +31,22 @@ namespace SideKick
                 // ファイルの終端までループ
                 while (!parser.EndOfData)
                 {
+                    StreamWriter sw = new StreamWriter(
+                    "tenki.txt", // 出力先ファイル名
+                    true, // 追加書き込み
+                    Encoding.UTF8);
+
+                    Console.SetOut(sw);
                     // フィールドを読込
                     string[] row = parser.ReadFields();
                     foreach (string field in row)
                     {
                         // タブ区切りで出力
-                        Console.Write(field + "\t");
+                        Console.Write(field + "\t");                  
                     }
                     Console.WriteLine();
+                    // ファイルを閉じてオブジェクトを破棄 
+                    sw.Dispose(); 
                 }
             }
         }
