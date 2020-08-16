@@ -4,6 +4,9 @@ using System.Net;
 using System.IO;
 using Microsoft.VisualBasic.FileIO;
 
+// 開発名 : サイドキック（相棒）
+// 内容   : 気象情報を加工するプログラム
+
 namespace SideKick
 {
     class Program
