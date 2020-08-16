@@ -29,8 +29,8 @@
 ```markdown
 ../../bin/Debug
 
-pre01.csv
-tenki.txt
+pre01.csv → Excelなどで表示 (SJIS)
+tenki.txt → zinbeijettなどで検索用 (UTF8)
 ```
 
 _tenki.txtをzinbeijettのengineで検索する_
