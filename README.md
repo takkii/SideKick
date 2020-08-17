@@ -38,9 +38,12 @@ _tenki.txtをzinbeijettのengineで検索する_
 ```markdown
 cd ../../bin/Debug (例)
 ※ tenki.txtを適切なPATHへ置く
+```
 
-engine -z tenki.txt 金沢
-※ 結果を並べる
+_engine -z tenki.txt 金沢_
+
+```markdown
+793 : 56227	石川県	金沢（カナザワ）	47605	2020	08	15	20	30	0.0	80.0	5						77.3	8	1950	09	18	75.7	81953	08	24	1937
 ```
 
 #### 令和2年8月16日
