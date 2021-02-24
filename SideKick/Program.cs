@@ -13,39 +13,55 @@ namespace SideKick
     {
         static void Main(string[] args)
         {
-            WebClient wctd = new WebClient();
-            wctd.DownloadFile(
-              "https://www.data.jma.go.jp/obd/stats/data/mdrr/pre_rct/alltable/pre1h00_rct.csv",
-              "pre01.csv");
-
-            var parser = new TextFieldParser(@"pre01.csv",
-            Encoding.GetEncoding("Shift_JIS"));
-            using (parser)
+            try
             {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
+                WebClient wctd = new WebClient();
+                wctd.DownloadFile(
+                  "https://www.data.jma.go.jp/obd/stats/data/mdrr/pre_rct/alltable/pre1h00_rct.csv",
+                  "pre01.csv");
 
-                parser.HasFieldsEnclosedInQuotes = true;
-                parser.TrimWhiteSpace = false;
-
-                while (!parser.EndOfData)
+                var parser = new TextFieldParser(@"pre01.csv",
+                Encoding.GetEncoding("Shift_JIS"));
+                using (parser)
                 {
-                    StreamWriter sw = new StreamWriter(
-                    "tenki.txt", 
-                    true,
-                    Encoding.UTF8);
+                    parser.TextFieldType = FieldType.Delimited;
+                    parser.SetDelimiters(",");
 
-                    Console.SetOut(sw);
+                    parser.HasFieldsEnclosedInQuotes = true;
+                    parser.TrimWhiteSpace = false;
 
-                    string[] row = parser.ReadFields();
-                    foreach (string field in row)
+                    while (!parser.EndOfData)
                     {
-                        Console.Write(field + "\t");                  
+                        StreamWriter sw = new StreamWriter(
+                        "tenki.txt",
+                        true,
+                        Encoding.UTF8);
+
+                        Console.SetOut(sw);
+
+                        string[] row = parser.ReadFields();
+                        foreach (string field in row)
+                        {
+                            Console.Write(field + "\t");
+                        }
+                        Console.WriteLine();
+                        sw.Dispose();
                     }
-                    Console.WriteLine();
-                    sw.Dispose(); 
                 }
             }
+            catch (IndexOutOfRangeException ex)
+            {
+                Console.WriteLine(ex);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            finally
+            {
+                GC.Collect();
+            }
+
         }
     }
 }
